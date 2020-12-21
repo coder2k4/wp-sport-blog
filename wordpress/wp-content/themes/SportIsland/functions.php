@@ -3,10 +3,13 @@
 add_action('after_setup_theme', 'si_setup');
 add_action('wp_enqueue_scripts', 'si_scripts');
 
+add_action('widgets_init', 'si_register'); // Хук инициализации виджетов
+
+
 function si_setup()
 {
-  register_nav_menu( 'primary', 'Меню в шапке' ); // Регистрация меню
-  register_nav_menu( 'secondary', 'Меню в подвале' );
+  register_nav_menu('primary', 'Меню в шапке'); // Регистрация меню
+  register_nav_menu('secondary', 'Меню в подвале');
 
   add_theme_support('custom-logo');
   add_theme_support('title-tag');
@@ -21,5 +24,59 @@ function si_scripts()
 
 function _si_assets_path($path): string
 {
-  return get_template_directory_uri(). '/assets/' . $path;
+  return get_template_directory_uri() . '/assets/' . $path;
+}
+
+function si_register()
+{
+  register_sidebar([
+    'name' => "Контакты в шапке сайта",
+    'id' => "si-header",
+    'before_widget' => null,
+    'after_widget' => null
+  ]);
+
+  register_sidebar([
+    'name' => "Контакты в подвале сайта",
+    'id' => "si-footer",
+    'before_widget' => null,
+    'after_widget' => null
+  ]);
+
+  register_sidebar([
+    'name' => "Контакты в футере - Колонка №1",
+    'id' => "si-footer-column-1",
+    'before_widget' => null,
+    'after_widget' => null
+  ]);
+
+  register_sidebar([
+    'name' => "Контакты в футере - Колонка №2",
+    'id' => "si-footer-column-2",
+    'before_widget' => null,
+    'after_widget' => null
+  ]);
+
+  register_sidebar([
+    'name' => "Контакты в футере - Колонка №3",
+    'id' => "si-footer-column-3",
+    'before_widget' => null,
+    'after_widget' => null
+  ]);
+
+
+  register_sidebar([
+    'name' => "Карта",
+    'id' => "si-map",
+    'before_widget' => null,
+    'after_widget' => null
+  ]);
+
+  register_sidebar([
+    'name' => "Под картой",
+    'id' => "si-after-map",
+    'before_widget' => null,
+    'after_widget' => null
+  ]);
+
 }
