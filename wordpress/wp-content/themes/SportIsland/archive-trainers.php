@@ -3,50 +3,33 @@
 
 <main class="main-content">
   <div class="wrapper">
-    <ul class="breadcrumbs">
-      <li class="breadcrumbs__item breadcrumbs__item_home">
-        <a href="index.html" class="breadcrumbs__link">Главная</a>
-      </li>
-      <li class="breadcrumbs__item">
-        <a href="trainers.html" class="breadcrumbs__link">Тренеры</a>
-      </li>
-    </ul>
+    <?php get_template_part('chunks/breadcrumbs'); ?>
   </div>
   <section class="trainers">
     <div class="wrapper">
       <h1 class="main-heading trainers__h">Тренеры</h1>
+      <?php if (have_posts()) : ?>
       <ul class="trainers-list">
+
+        <?php while (have_posts()) : the_post();  ?>
         <li class="trainers-list__item">
           <article class="trainer">
-            <img src="img/trainers__trainer_pic1.png" alt="" class="trainer__thumb">
+            <img src="<?= get_field('trainer_photo')['url']?>" alt="<?= get_field('trainer_photo')['alt']?>" class="trainer__thumb">
             <div class="trainer__wrap">
-              <h2 class="trainer__name"> Комзова Ольга </h2>
-              <p class="trainer__text"> Сертифицированный специалист по Пилатесу (Matwork, Ring, Ball, miniball) и ZUMBA, ZUMBA by strong. </p>
+              <h2 class="trainer__name"> <? the_title(); ?> </h2>
+              <p class="trainer__text"> <? the_field('trainer_description'); ?> </p>
             </div>
             <a href="#" class="trainer__subscribe btn">записаться</a>
           </article>
         </li>
-        <li class="trainers-list__item">
-          <article class="trainer">
-            <img src="img/trainers__trainer_pic2.png" alt="" class="trainer__thumb">
-            <div class="trainer__wrap">
-              <h2 class="trainer__name"> Юзвак Дмитрий </h2>
-              <p class="trainer__text"> Хореограф. Преподаватель Dance Mix, Twerk, Strip dance и др направлений. Официальный представитель UBPF. Чемпионка Европы по фитнес Бикини. Тренер по дефиле. Персональный тренер тренажерного зала. </p>
-            </div>
-            <a href="#" class="trainer__subscribe btn">записаться</a>
-          </article>
-        </li>
-        <li class="trainers-list__item">
-          <article class="trainer">
-            <img src="img/trainers__trainer_pic3.png" alt="" class="trainer__thumb">
-            <div class="trainer__wrap">
-              <h2 class="trainer__name"> Рудь Валерий </h2>
-              <p class="trainer__text"> Персональный тренер. МСМК по пауерлифтингу, неоднократный победитель соревнований. </p>
-            </div>
-            <a href="#" class="trainer__subscribe btn">записаться</a>
-          </article>
-        </li>
+        <?php endwhile; ?>
+
       </ul>
+      <?php the_posts_pagination(); ?>
+
+      <?php else: ?>
+        <?php get_template_part('chunks/no-posts'); ?>
+      <?php endif; ?>
     </div>
   </section>
 </main>

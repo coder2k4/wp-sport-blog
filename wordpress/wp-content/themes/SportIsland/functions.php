@@ -17,12 +17,21 @@ add_action('wp_enqueue_scripts', 'si_scripts'); // Подгружаем наши
 add_action('widgets_init', 'si_register'); // Хук инициализации виджетов
 add_action('init', 'si_register_types'); // Регистрируем новые типы записей
 add_action('add_meta_boxes', 'si_meta_boxes'); // Добавляем дополнительные поля для записи
-
+add_action('save_post', 'si_save_like_meta'); // Подписываемся на хук сохранения постов в админке, для сохранения данных своего поля
 
 add_shortcode('si-paste-link', 'si_paste_link'); //Регистрируем шорткод
 
 add_filter('show_admin_bar', '__return_false'); // Отключаем панель администрирования
 add_filter('si_widget_text', 'do_shortcode'); //Создаем фильтр, которы проходит регуляркой и заменяе все шоркоды в виджете
+
+// Сохраняем данные из дополнительного поля записи
+function si_save_like_meta($post_id)
+{
+  if(isset($_POST['si-like'])) {
+    update_post_meta($post_id,'si-like', $_POST['si-like']);
+  }
+}
+
 
 // Регистрируем дополнительное поле
 function si_meta_boxes()
@@ -40,7 +49,11 @@ function si_meta_like_cb($post_obj)
 {
   $like = get_post_meta($post_obj->ID, 'si-like', 'true');
   $like = $like ? $like : '0';
-  echo '<p>' . $like . '</p>';
+
+  echo "<input type='text' name='si-like' value='${like}'>";
+
+
+  //echo '<p>' . $like . '</p>';
 }
 
 

@@ -33,6 +33,7 @@
               </li>
             <?php endwhile; ?>
           </ul>
+          <?php the_posts_pagination() ?>
         </div>
       </section>
 
