@@ -56,7 +56,7 @@
 
               <li class="category">
                 <a href="<?=get_category_link($category->term_id)?>" class="category__link">
-                  <img src="<?= _si_assets_path("img/blog__category_thmb1.jpg")?>" alt="<?= $category->name ?>" class="category__thumb">
+                  <img src="<?= get_field('cat_thumb', 'category_'.$category->term_id)['url'] ?>" alt="<?= $category->name ?>" class="category__thumb">
                   <span class="category__name"><?= $category->name ?></span>
                 </a>
               </li>
