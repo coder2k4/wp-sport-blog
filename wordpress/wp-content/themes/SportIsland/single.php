@@ -50,6 +50,5 @@
         </footer>
       </article>
     <?php endwhile; endif; ?>
-
   </main>
 <?php get_footer() ?>

@@ -60,7 +60,7 @@ Template Post Type: post, page, product
           <?php
           global $post;
           foreach ($sales as $post):
-            setup_postdata($post)
+            setup_postdata($post);
             ?>
             <section class="slider__slide stock">
               <a href="<?php the_permalink(); ?>" class="stock__link"

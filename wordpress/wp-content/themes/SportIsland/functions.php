@@ -18,17 +18,53 @@ add_action('widgets_init', 'si_register'); // Хук инициализации 
 add_action('init', 'si_register_types'); // Регистрируем новые типы записей
 add_action('add_meta_boxes', 'si_meta_boxes'); // Добавляем дополнительные поля для записи
 add_action('save_post', 'si_save_like_meta'); // Подписываемся на хук сохранения постов в админке, для сохранения данных своего поля
+add_action('admin_menu', 'si_general_option_slogan_register'); // Добавляем дополнительное поле, в настройки админ пенли
+
 
 add_shortcode('si-paste-link', 'si_paste_link'); //Регистрируем шорткод
 
 add_filter('show_admin_bar', '__return_false'); // Отключаем панель администрирования
 add_filter('si_widget_text', 'do_shortcode'); //Создаем фильтр, которы проходит регуляркой и заменяе все шоркоды в виджете
 
+
+// Инициализируем новое поле и регистрируем его в админ панели
+function si_general_option_slogan_register()
+{
+
+  // регистрируем опцию
+  register_setting('general', 'si_general_option_slogan');
+
+  // добавляем поле
+  add_settings_field(
+    'si_general_option_slogan',
+    'Слоган вашего сайта',
+    'si_general_option_slogan_cb',
+    'general',
+    'default',
+    [
+      'label_for' => 'si_general_option_slogan',
+    ]
+  );
+
+}
+
+function si_general_option_slogan_cb($args)
+{
+  ?>
+  <input type="text" id="<?= $args['label_for'] ?>"
+         value="<?= get_option($args['label_for']) ?>"
+         name="<?= $args['label_for'] ?>"
+         class="regular-text code"
+  >
+  <?php
+}
+
+
 // Сохраняем данные из дополнительного поля записи
 function si_save_like_meta($post_id)
 {
-  if(isset($_POST['si-like'])) {
-    update_post_meta($post_id,'si-like', $_POST['si-like']);
+  if (isset($_POST['si-like'])) {
+    update_post_meta($post_id, 'si-like', $_POST['si-like']);
   }
 }
 

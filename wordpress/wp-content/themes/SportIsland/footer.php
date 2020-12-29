@@ -35,7 +35,7 @@
 
       <p class="main-header__logolink">
         <?php the_custom_logo() ?>
-        <span class="slogan">Твой фитнес клуб всегда рядом!</span>
+        <span class="slogan"><?= get_option('si_general_option_slogan') ?></span>
       </p>
       <!--      <nav class="main-navigation">-->
       <!--        <ul class="main-navigation__list">-->
