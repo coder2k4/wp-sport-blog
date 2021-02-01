@@ -23,6 +23,10 @@ add_action('admin_menu', 'si_general_option_slogan_register'); // Добавля
 add_action('admin_post_nopriv_si-modal-form', 'si_modal_form_handler'); // Подписываемся на обработку (формы)
 add_action('admin_post_si-modal-form', 'si_modal_form_handler'); // Подписываемся на обработку (формы)
 
+add_action('admin_ajax_nopriv_post-likes', 'si_likes'); // Подписываемся на обработку (формы) AJAX admin_ajax_nopriv
+add_action('admin_ajax_post-likes', 'si_likes'); // Подписываемся на обработку (формы) AJAX admin_ajax
+
+
 add_shortcode('si-paste-link', 'si_paste_link'); //Регистрируем шорткод
 
 add_filter('show_admin_bar', '__return_false'); // Отключаем панель администрирования
@@ -30,6 +34,13 @@ add_filter('si_widget_text', 'do_shortcode'); //Создаем фильтр, к�
 
 //Получение данных с формы
 function si_modal_form_handler() {
+
+}
+
+function si_likes() {
+
+  echo 'Данные получены';
+  wp_die();
 
 }
 
