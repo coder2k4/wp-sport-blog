@@ -23,8 +23,8 @@ add_action('admin_menu', 'si_general_option_slogan_register'); // Добавля
 add_action('admin_post_nopriv_si-modal-form', 'si_modal_form_handler'); // Подписываемся на обработку (формы)
 add_action('admin_post_si-modal-form', 'si_modal_form_handler'); // Подписываемся на обработку (формы)
 
-add_action('admin_ajax_nopriv_post-likes', 'si_likes'); // Подписываемся на обработку (формы) AJAX admin_ajax_nopriv
-add_action('admin_ajax_post-likes', 'si_likes'); // Подписываемся на обработку (формы) AJAX admin_ajax
+add_action('wp_ajax_nopriv_post-likes', 'si_likes'); // Подписываемся на обработку (формы) AJAX wp_ajax_nopriv
+add_action('wp_ajax_post-likes', 'si_likes'); // Подписываемся на обработку (формы) AJAX wp_ajax
 
 
 add_shortcode('si-paste-link', 'si_paste_link'); //Регистрируем шорткод
@@ -38,6 +38,13 @@ function si_modal_form_handler() {
 }
 
 function si_likes() {
+
+//  $_POST
+//  [
+//    'action' => 'post-likes',
+//    'like' => 'add',
+//    'id' => '119',
+//  ]
 
   echo 'Данные получены';
   wp_die();

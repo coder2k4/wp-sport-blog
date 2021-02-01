@@ -86,12 +86,43 @@
 
               $button.addEventListener('click', function (e) {
                 e.preventDefault();
-                hasLike = getLike(id)
-                if (hasLike) return
 
+                hasLike = getLike(id)
+
+                //Формируем данные для отправки
                 const data = new FormData()
                 data.append('action', 'post-likes');
+                const like = hasLike ? 'sub' : 'add'
+                data.append('like', like)
+                data.append('id', id)
 
+                // Отправляем AJAX запрос
+                const xhr = new XMLHttpRequest()
+                xhr.open('POST', url)
+                xhr.send(data)
+                $button.disabled = true
+                xhr.addEventListener('readystatechange', function () {
+                  if (xhr.readyState !== 4) return
+                  if (xhr.status === 200) {
+                    $button.querySelector('.like__count').innerText = xhr.responseText
+                    let localLikedData = localStorage.getItem('liked')
+                    let newData = ''
+                    if (hasLike) {
+                      newData = localLikedData.split(',').filter(function (likeId) {
+                        return likeId !== id
+                      }).join(',')
+                    } else
+                    {
+                      newData = localLikedData.split(',').filter(Number).concat(id).join(',')
+                    }
+
+                    localStorage.setItem('liked', newData)
+                    $button.classList.toggle('like_liked')
+                  } else {
+                    console.log(xhr.statusText)
+                  }
+                  $button.disabled = false
+                })
               })
             })
           </script>
